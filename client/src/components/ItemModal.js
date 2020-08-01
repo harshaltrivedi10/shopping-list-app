@@ -60,6 +60,7 @@ class ItemModal extends Component {
                   id="item"
                   placeholder="Add Shopping Item"
                   onChange={this.onChange}
+                  style={{ marginBottom: '2rem' }}
                 />
                 <Button
                   color="dark"

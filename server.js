@@ -1,28 +1,35 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 
 const items = require('./routes/api/items');
+const users = require('./routes/api/users');
+const auth = require('./routes/api/auth');
 
-const keys = require('./config/keys');
+const config = require('config');
 
 const app = express();
 
 // body-parser middleware
-app.use(bodyParser.json());
+app.use(express.json());
 
 // Database config
-const db = keys.MONGO_URI;
+const db = config.get('MONGO_URI');
 // connect to the db
 mongoose
-  .connect(db, { useUnifiedTopology: true, useNewUrlParser: true })
+  .connect(db, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true,
+  })
   .then(() => {
     console.log('Connected to the MongoDB');
   })
   .catch(error => console.log(error));
 
 // Use routes
-app.use('/api/items/', items);
+app.use('/api/items', items);
+app.use('/api/users', users);
+app.use('/api/auth', auth);
 
 const port = process.env.PORT || 5000;
 
