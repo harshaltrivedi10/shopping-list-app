@@ -26,7 +26,8 @@ router.post('/', auth, (req, res) => {
 });
 
 // post to api/items to delete an item
-router.post('/:id', auth, (req, res) => {
+router.post('/:id', (req, res) => {
+  console.log(req.body);
   Item.findByIdAndDelete(req.params.id)
     .then(result => {
       res.json({ success: true });
